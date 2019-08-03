@@ -30,7 +30,7 @@ with open(PyPollcsv, newline="") as csvfile:
    winning_vote_count = max(vote_count)
    winner = unique_candidate[vote_count.index(winning_vote_count)]
 
-# Output perhaps needs to be rounded to 3 decimal points. Leaving that formatting out for now) Tried rounding and that didn't work yet.
+#  str(round(answer, 2))Output perhaps needs to be rounded to 3 decimal points. Leaving that formatting out for now) Tried rounding and that didn't work yet.
 print("-------------------------")
 print("Election Results")
 print("-------------------------")
@@ -41,3 +41,11 @@ for i in range(len(unique_candidate)):
 print("-------------------------")
 print("The winner is: " + winner)
 print("-------------------------")
+
+# Specify the file to write to
+output_path = os.path.join("Resources" , "new.csv")
+with open(output_path, 'w', newline='') as csvfile:
+    # Initialize csv.writer
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    # Write the first row (column headers)
+    csvwriter.writerow(['Voter ID', 'County', 'Candidate'])
