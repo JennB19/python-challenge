@@ -40,3 +40,11 @@ with open(csvpath, newline="") as csvfile:
    print("Average Change: $", round(Average_Change))
    print("Greatest Increase: ", Greatest_Increase_Date, "($", Greatest_Increase,")")
    print("Greatest Decrease: ", Greatest_Decrease_Date, "($", Greatest_Decrease,")")
+
+# Specify the file to write to
+output_path = os.path.join("Resources" , "new.csv")
+with open(output_path, 'w', newline='') as csvfile:
+    # Initialize csv.writer
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    # Write the first row (column headers)
+    csvwriter.writerow(['Data', 'Profit/Losses'])
