@@ -43,7 +43,7 @@ print("The winner is: " + winner)
 print("-------------------------")
 
 # Specify the file to write to
-output_path = os.path.join("Resources" , "new.csv")
+output_path = os.path.join("Resources" , "new.txt")
 with open(output_path, 'w', newline='') as csvfile:
     # Initialize csv.writer
     csvwriter = csv.writer(csvfile, delimiter=',')
