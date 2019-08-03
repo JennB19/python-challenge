@@ -1,74 +1,43 @@
-#This script will review election results, tally the votes, and identify the winner
 import os
 import csv
-
-#Set path for file
-csvpath = os.path.join("Resources", "election_data.csv")
-#print(csvpath)
-# Open and read the CSV
-with open(csvpath, newline="") as csvfile:
-   #print(csvreader)
-   # Read header row, print it, set it aside
+# Objective 2: Set the path for the CSV file in PyPollcsv
+PyPollcsv = os.path.join("Resources","election_data.csv")
+# Objective 3: Create the lists to store data. Initialize
+count = 0
+candidatelist = []
+unique_candidate = []
+vote_count = []
+vote_percent = []
+# Open the CSV using the set path PyPollcsv
+with open(PyPollcsv, newline="") as csvfile:
    csvreader = csv.reader(csvfile, delimiter=",")
-   csv_header = next(csvfile)
-   #print(f"Header: {csv_header}")
-   # Declare variables as empty lists
+   csv_header = next(csvreader)
+   # Conduct the ask
+   for row in csvreader:
+       # Count the total number of votes
+       count = count + 1
+       # Set the candidate names to candidatelist
+       candidatelist.append(row[2])
+       # Create a set from the candidatelist to get the unique candidate names
+   for x in set(candidatelist):
+       unique_candidate.append(x)
+       # y is the total number of votes per candidate
+       y = candidatelist.count(x)
+       vote_count.append(y)
+       # z is the percent of total votes per candidate
+       z = (y/count)*100
+       vote_percent.append(z)
+   winning_vote_count = max(vote_count)
+   winner = unique_candidate[vote_count.index(winning_vote_count)]
 
-
-#Initial variables
-total_votes = 0
-candidate = ""
-candidate_votes = {}
-candidate_percentages ={}
-winner_votes = 0
-winner = ""
-
-# open csv file
-filepath = os.path.join("raw_data", filename)
-with open(filepath,'r', newline="") as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=",")
-
-    next(csvreader)
-
-    # tally votes
-    for row in csvreader:
-        total_votes = total_votes + 1
-        candidate = row[2]
-        if candidate in candidate_votes:
-            candidate_votes[candidate] = candidate_votes[candidate] + 1
-        else:
-            candidate_votes[candidate] = 1
-
-# calculate vote percentage and identify winner
-for person, vote_count in candidate_votes.items():
-    candidate_percentages[person] = '{0:.0%}'.format(vote_count / total_votes)
-    if vote_count > winner_votes:
-        winner_votes = vote_count
-        winner = person
-
-dashbreak = "-------------------------"
-
-# print out results
+# Output perhaps needs to be rounded to 3 decimal points. Leaving that formatting out for now) Tried rounding and that didn't work yet.
+print("-------------------------")
 print("Election Results")
-print(dashbreak)
-print(f"Total Votes: {total_votes}")
-print(dashbreak)
-for person, vote_count in candidate_votes.items():
-    print(f"{person}: {candidate_percentages[person]} ({vote_count})")
-print(dashbreak)
-print(f"Winner: {winner}")
-print(dashbreak)
-
-# save summary to txt
-save_file = filename.strip(".csv") + "_results.txt"
-filepath = os.path.join(".", save_file)
-with open(filepath,'w') as text:
-    text.write(dashbreak + "\n")
-    text.write(f"Total Votes: {total_votes}" + "\n")
-    text.write(dashbreak + "\n")
-    for person, vote_count in candidate_votes.items():
-    text.write(f"{person}: {candidate_percentages[person]} ({vote_count})" + "\n")
-    text.write(dashbreak + "\n")
-    text.write(f"Winner: {winner}" + "\n")
-    text.write(dashbreak + "\n") 
-     3,521,002  PyPoll/raw_data/election_data_2.csv 
+print("-------------------------")
+print("Total Votes :" + str(count))
+print("-------------------------")
+for i in range(len(unique_candidate)):
+           print(unique_candidate[i] + ": " + str(vote_percent[i]) +"% (" + str(vote_count[i])+ ")")
+print("-------------------------")
+print("The winner is: " + winner)
+print("-------------------------")
